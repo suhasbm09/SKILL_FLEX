@@ -1,0 +1,52 @@
+# ====================
+# Frontend (Vite + React)
+# ====================
+/frontend/client_vite/node_modules/
+/frontend/client_vite/.vite/
+/frontend/client_vite/dist/
+/frontend/client_vite/test-ledger/
+/frontend/client_vite/dist-ssr/
+/frontend/client_vite/*.local
+/frontend/client_vite/*.log
+/frontend/client_vite/logs/
+/frontend/client_vite/npm-debug.log*
+/frontend/client_vite/yarn-debug.log*
+/frontend/client_vite/yarn-error.log*
+/frontend/client_vite/pnpm-debug.log*
+/frontend/client_vite/lerna-debug.log*
+
+# ====================
+# Backend (Flask + Python)
+/backend/.env
+/backend/venv/
+/backend/__pycache__/
+/backend/*.log
+
+# ====================
+# Smart Contract (Solana Anchor)
+/smart_contract/skill-certificate/target/
+/smart_contract/skill-certificate/.anchor/
+/smart_contract/skill-certificate/build
+/smart_contract/skill-certificate/tests/
+/smart_contract/skill-certificate/tsconfig.json
+/smart_contract/skill-certificate/yarn.lock
+# /smart_contract/test-ledger/
+
+
+# ====================
+# System & Editor
+.DS_Store
+*.log
+.env
+*.sw?
+.idea/
+/.vscode/
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ====================
+# Misc
+public.txt

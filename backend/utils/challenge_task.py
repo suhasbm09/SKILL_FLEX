@@ -1,0 +1,44 @@
+# backend/utils/challenge_tasks.py
+
+challenge_details = {
+    "1": {
+        "name": "Algorithmic Problem Solving in JavaScript",
+        "symbol": "JS-DSA",
+        "tasks": [
+            "Write a function longestZeroSum(arr) that returns the length of the longest subarray whose sum is zero in O(n) time.",
+            "Implement isBalancedParentheses(str) to check for balanced brackets in O(n) time."
+        ],
+    },
+    "2": {
+        "name": "Query & Model Data with MongoDB",
+        "symbol": "DB-MDB",
+        "tasks": [
+            "Design a Mongoose schema for a User with embedded Post documents and query all posts by a given user.",
+            "Write an aggregation pipeline to return the top 5 users by post count."
+        ],
+    },
+    "3": {
+        "name": "Full-Stack App Deployment on AWS ECS",
+        "symbol": "AWS-ECS",
+        "tasks": [
+            "Dockerize a Node.js Express app and push to AWS ECR.",
+            "Provide an ECS Task Definition and Fargate Service JSON for that container."
+        ],
+    },
+    "4": {
+        "name": "Efficient Software Delivery with Docker",
+        "symbol": "DCKR",
+        "tasks": [
+            "Create a Dockerfile for a Flask API listening on port 5000.",
+            "Write a docker-compose.yml to run the Flask API alongside PostgreSQL."
+        ],
+    },
+    "5": {
+      "name": "Smart Contract Development on Solana",
+      "symbol": "SOL-ANCHOR",
+      "tasks": [
+        "Mint SPL Tokens Using Anchor - Write an Anchor instruction that uses the token::MintTo CPI to mint SPL tokens to a user's associated token account.",
+        "Explain Program Derived Addresses in Anchor - Explain what a PDA is, how it's generated with seeds and bump, and why it's used instead of regular keypairs."
+      ]
+    },
+}
