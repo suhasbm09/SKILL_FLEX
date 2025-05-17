@@ -10,14 +10,15 @@ export const WalletProvider = ({ children }) => {
     if (window.solana?.isPhantom) {
       try {
         const res = await window.solana.connect();
-        setWalletAddress(res.publicKey.toString());
+        const address = res.publicKey.toString();
+        setWalletAddress(address);
         setIsConnected(true);
-        console.log("Wallet connected:", res.publicKey.toString());
+        console.log('✅ Wallet connected:', address);
       } catch (err) {
-        console.error('Wallet connection failed:', err);
+        console.error('❌ Wallet connection failed:', err);
       }
     } else {
-      alert('Phantom Wallet not found. Please install it from https://phantom.app/');
+      alert('⚠️ Phantom Wallet not found. Please install it from https://phantom.app/');
     }
   };
 
@@ -27,15 +28,22 @@ export const WalletProvider = ({ children }) => {
         await window.solana.disconnect();
         setWalletAddress(null);
         setIsConnected(false);
-        console.log("Wallet disconnected.");
+        console.log('🔌 Wallet disconnected.');
       } catch (err) {
-        console.error('Wallet disconnection failed:', err);
+        console.error('❌ Wallet disconnection failed:', err);
       }
     }
   };
 
   return (
-    <WalletContext.Provider value={{ walletAddress, connectWallet, isConnected, disconnectWallet }}>
+    <WalletContext.Provider
+      value={{
+        walletAddress,
+        isConnected,
+        connectWallet,
+        disconnectWallet,
+      }}
+    >
       {children}
     </WalletContext.Provider>
   );

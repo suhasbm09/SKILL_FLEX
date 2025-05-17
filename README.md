@@ -4,72 +4,77 @@
 [![OpenRouter](https://img.shields.io/badge/AI%20Engine-OpenRouter-ff69b4.svg)](https://openrouter.ai)
 
 > **Turn Your Skill Into Proof**  
-> A decentralized credentialing platform: take AI‑evaluated challenges, mint soulbound NFTs on Solana, and showcase your verified skills.
+> A decentralized credentialing platform: attempt AI-evaluated challenges, mint soulbound NFTs on Solana, and showcase your verified skills.
 
 ---
 
 ## 📑 Table of Contents
-1. [Project Overview](#-project-overview)
-2. [Key Features](#-key-features)
-3. [Tech Stack](#-tech-stack)
-4. [Architecture](#-architecture)
-5. [Repo Structure](#-repo-structure)
-6. [Installation & Setup](#-installation--setup)
-7. [Configuration](#-configuration)
-8. [Usage](#-usage)
-9. [Smart Contract Highlights](#-smart-contract-highlights)
-10. [Roadmap](#-roadmap)
-11. [Contributing](#-contributing)
-12. [License](#-license)
-13. [Contact](#-contact)
+1. [Project Overview](#-project-overview)  
+2. [Key Features](#-key-features)  
+3. [Tech Stack](#-tech-stack)  
+4. [Architecture](#-architecture)  
+5. [Repository Structure](#-repository-structure)  
+6. [Installation & Setup](#-installation--setup)  
+7. [Configuration](#-configuration)  
+8. [Usage](#-usage)  
+9. [Smart Contract Highlights](#-smart-contract-highlights)  
+10. [Roadmap](#-roadmap)  
+11. [Contact](#-contact)  
 
 ---
 
 ## 🚀 Project Overview
 SkillFlex is a full-stack dApp that empowers learners and professionals to:
-- **Attempt real-world skill challenges** (text, code, file)
-- **Get instant AI evaluation** via OpenRouter
-- **Mint a non-transferable (soulbound) NFT** on Solana as immutable proof of skill
-
-Every credential is tied to your wallet and can be displayed in Phantom or shared on social media.
+- **Attempt real-world challenges** (text, code, file)  
+- **Get instant, strict AI evaluation** via OpenRouter (Mistral 7B Instruct)  
+- **Mint a non-transferable (soulbound) NFT** on Solana Devnet as immutable proof  
+- **Share credentials** directly on LinkedIn or X  
 
 ---
 
 ## ✨ Key Features
-- **Challenge Engine**: Dynamic tasks delivered in multiple modes
-- **AI Evaluation**: Strict, real-time scoring via `mistral-7b-instruct:free` (OpenRouter)
-- **Soulbound NFTs**: Minted on Solana Devnet using Anchor + Metaplex metadata
-- **Custom NFT Template**: Neon-dark design showing challenge code, score, masked wallet, timestamp
-- **History & Analytics**: On-demand mint history from MongoDB Atlas
-- **Modern UI/UX**: React + Vite + TailwindCSS with neon theme, Orbitron font, animations
-- **Wallet Integration**: Phantom connect/disconnect flow, UX gating
+- **Multimodal Challenges**: Submit text, code snippets, or file uploads  
+- **AI Scoring**: Automated, repeatable scoring (0–100) with 85% pass threshold  
+- **Soulbound NFTs**: Anchor + Metaplex mint, supply locked to 1  
+- **Dynamic NFT Template**: Neon-dark design with your challenge code, score, masked wallet, timestamp  
+- **History & Analytics**: On-chain mint history powered by MongoDB Atlas  
+- **Sleek UI/UX**: React + Vite + TailwindCSS, Orbitron font, animated gradients & transitions  
+- **Phantom Wallet Integration**: Connect/disconnect gating, devnet flow  
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Layer         | Technology                         | Purpose                                     |
-|---------------|------------------------------------|---------------------------------------------|
-| Frontend      | React, Vite, TailwindCSS           | Dynamic UI, rapid dev, neon/dark styling    |
-| AI Layer      | Flask, OpenRouter API (LLMs)       | Submission evaluation, scoring logic        |
-| Blockchain    | Solana Devnet, Anchor (Rust)       | Soulbound NFT minting, on-chain credential  |
-| Database      | MongoDB Atlas (Free Tier)          | Mint history, user records                  |
-| Storage       | IPFS (via Pinata/Web3.Storage)     | NFT metadata & images                       |
+| Layer         | Technology                         | Purpose                                  |
+| ------------- | ---------------------------------- | ---------------------------------------- |
+| **Frontend**  | React, Vite, TailwindCSS           | Responsive, animated neon UI             |
+| **AI Layer**  | Flask, OpenRouter API (LLM)        | Challenge evaluation and scoring         |
+| **Blockchain**| Solana Devnet, Anchor (Rust)       | Soulbound NFT minting & metadata CPI     |
+| **Database**  | MongoDB Atlas                      | Mint history and record storage          |
+| **Storage**   | IPFS (via Pinata)                  | NFT metadata & images                    |
 
 ---
 
 ## 📐 Architecture
 
+
 ```
-[Browser] — React/Vite/Tailwind
-    ↳ “/”, “/challenge/:id”, “/result”
-    ↳ Phantom Wallet Context → Connect/Disconnect
+  Browser (React/Vite/Tailwind)
+  ├─ / → Home
+  ├─ /challenge/:id → Challenge UI (text/code/file)
+  ├─ /result → Score & Mint
+  └─ Phantom Wallet Context
 
-[Flask API] — Evaluate → OpenRouter AI → Score
-           └ Mint → Anchor Program → Solana Devnet
-           └ Log → MongoDB Atlas
+  Flask API
+  ├─ POST /evaluate → LLM prompt → Score
+  ├─ POST /generate_metadata → Render + Pin to IPFS
+  └─ POST /record_mint → Log to MongoDB
 
-[IPFS] — Store dynamic NFT metadata/images
+  Solana Devnet (Anchor + Metaplex)
+  └─ Minting CPI for soulbound NFT
+
+  IPFS (Pinata)
+└─ Store dynamic PNG & JSON metadata
 ```
 
 ---
@@ -77,23 +82,27 @@ Every credential is tied to your wallet and can be displayed in Phantom or share
 ## 📂 Repo Structure
 
 ```
-PROOF_OF_SKILL/
-├─ backend/                  # Flask API & AI evaluation
-│   ├─ app.py                # Main Flask server
-│   ├─ evaluate.py           # LLM prompt logic
-│   └─ .env                  # (gitignored) secrets & keys
+SKILL_FLEX/
 │
-├─ frontend/client_vite/     # React/Vite app
-│   ├─ src/                  # React components & pages
-│   ├─ public/               # Static assets, index.html
-│   └─ vite.config.js
+├─ backend/ # Flask API & AI evaluation
+│ ├─ app.py # Server routes
+│ ├─ render_nft.py # PIL template rendering + Pinata upload
+│ ├─ utils/ # scoring & challenge definitions
+│ └─ requirements.txt # Python deps
 │
-├─ smart_contract/           # Solana Anchor program
-│   ├─ programs/             # Rust source
-│   ├─ Anchor.toml           # Anchor config
-│   └─ test-ledger/          # (gitignored) local validator state
+├─ frontend/client_vite/ # React + Tailwind app
+│ ├─ src/
+│ │ ├─ components/ # Header, Modal, WalletContext…
+│ │ ├─ pages/ # Home, Challenge, Result, History, About
+│ │ └─ assets/ # fonts, images, challengeTasks.jsx
+│ └─ vite.config.js
 │
-├─ .gitignore                # Exclude node_modules, dist, etc.
+├─ smart_contract/ # Anchor program (Rust)
+│ ├─ programs/
+│ ├─ Anchor.toml
+│ └─ target/ # build artifacts (gitignored)
+│
+├─ .env.example # Template for env vars
 └─ README.md
 ```
 
@@ -102,27 +111,25 @@ PROOF_OF_SKILL/
 ## ⚙️ Installation & Setup
 
 ### Prerequisites
-- Node.js >= 16, npm or yarn
-- Python 3.9+, pip
-- Rust & Anchor CLI
-- Solana CLI  
-  ```bash
-  solana config set --url https://api.devnet.solana.com
-  ```
-- Phantom Wallet extension
+  - **Node.js >= 16** & npm/yarn  
+  - **Python 3.9+** & pip  
+  - **Rust & Anchor CLI**  
+  - **Solana CLI** configured to Devnet  
+  - **Phantom Wallet** extension
 
 ### 1. Clone
 ```bash
-git clone https://github.com/YOUR_USERNAME/skillflex.git
-cd skillflex
+git clone https://github.com/suhasbm09/SKILL_FLEX.git
+cd SKILL_FLEX
 ```
 
 ### 2. Backend
 ```bash
 cd backend
+python3 -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
-# Fill in keys in .env
+# Fill in your OPENROUTER_API_KEY, PINATA keys, MONGODB_URI
 flask run --port 5000
 ```
 
@@ -130,7 +137,8 @@ flask run --port 5000
 ```bash
 cd frontend/client_vite
 npm install
-npm run dev   # http://localhost:5173
+npm run dev    # → http://localhost:5173
+
 ```
 
 ### 4. Smart Contract (Anchor)
@@ -144,11 +152,13 @@ anchor deploy --provider.cluster devnet
 
 ## 🔧 Configuration
 
-Create `.env` in `/backend`:
+Add to backend/.env:
 ```ini
 OPENROUTER_API_KEY=your_openrouter_key
+PINATA_API_KEY=your_pinata_key
+PINATA_SECRET_KEY=your_pinata_secret
 MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/skillflex
-SOLANA_RPC_URL=https://api.devnet.solana.com
+
 ```
 
 Add to root `.gitignore`:
@@ -163,35 +173,49 @@ Add to root `.gitignore`:
 
 ## 🏃 Usage
 
-1. Connect Phantom on the Home page  
-2. Select & complete a challenge  
-3. Submit via text/code/file  
-4. View AI score & retry if desired  
-5. Mint your NFT credential (soulbound)  
-6. Share on LinkedIn/X or view History  
+1. Connect Phantom (→ Devnet)
+
+2. Select a skill challenge
+
+3. Submit answer via text/code/file
+
+4. View AI score & retry if needed
+
+5. Mint your credential (85%+ pass)
+
+6. Share on LinkedIn/X or check History
 
 ---
 
 ## 🔗 Smart Contract Highlights
 
-- Anchor v0.31.1 program mints an NFT with:
-  - **Metadata URI** (IPFS)
-  - **Name**: Challenge #ID Mastery
-  - **Symbol**: SFx
-- **Soulbound** – non-transferable to ensure authenticity
+- Program: minting(name, symbol, uri)
 
+- Data: name, symbol, URI, 0% seller fee, closed supply
+
+- CPI: Metaplex Metadata & Master Edition V3 for soulbound NFTs
 ---
 
 ## 🛣️ Roadmap
 
-- **v1.1**: Multi-org portal & custom challenge creation  
-- **v1.2**: Leaderboard & DAO-governed challenges  
-- **v1.3**: Mobile wallet badges & Web3 recruiter integrations  
-- **v2.0**: 1 Million credentials minted  
+- **v1.1:** Custom challenge creation & permissions
+
+- **v1.2:** Leaderboards & DAO-governed scoring
+
+- **v1.3:** Mobile wallet integration & recruiter APIs
+
+- **v2.0:** Mainnet-beta launch & cross-chain support
 
 ---
 
 ## ✉️ Contact
 
 **Suhas B M**  
-🔗 [GitHub](https://github.com/suhasbm09) | ✉️ suhaasbm2004@gmail.com
+
+
+    GitHub: https://github.com/suhasbm09
+
+    Email: suhaasbm2004@gmail.com
+
+  > Building the future, one skill at a time.
+

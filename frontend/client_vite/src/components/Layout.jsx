@@ -5,9 +5,10 @@ import '../index.css';
 
 const Layout = () => {
   return (
-    <div className="min-h-screen flex flex-col animated-gradient-bg text-white">
+    <div className="min-h-screen flex flex-col text-white">
+      
       <Header />
-      <main className="flex-grow">
+      <main className=" flex-grow">
         <Outlet />
       </main>
       <Footer />

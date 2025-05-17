@@ -20,6 +20,7 @@
 /backend/.env
 /backend/venv/
 /backend/__pycache__/
+/backend/utils/__pycache__/
 /backend/*.log
 
 # ====================

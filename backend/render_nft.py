@@ -1,9 +1,10 @@
 import os
 import requests
-from dotenv import load_dotenv
 from datetime import datetime
 from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
+from dotenv import load_dotenv
+from pytz import timezone
 
 load_dotenv()
 
@@ -12,9 +13,10 @@ PINATA_SECRET = os.getenv("PINATA_SECRET_KEY")
 PINATA_BASE = "https://api.pinata.cloud"
 TEMPLATE = os.getenv("TEMPLATE_PATH")
 
+# Load fonts
 FONT_XLG = ImageFont.truetype("assets/fonts/Orbitron-Bold.ttf", 54)
-FONT_LG = ImageFont.truetype("assets/fonts/Orbitron-Bold.ttf", 48)
-FONT_MD = ImageFont.truetype("assets/fonts/Orbitron-Regular.ttf", 32)
+FONT_LG  = ImageFont.truetype("assets/fonts/Orbitron-Bold.ttf", 48)
+FONT_MD  = ImageFont.truetype("assets/fonts/Orbitron-Regular.ttf", 32)
 
 def pin_file(image_bytes, name):
     headers = {
@@ -43,37 +45,37 @@ def generate_and_pin(challenge, score, wallet, timestamp):
     draw = ImageDraw.Draw(img)
     W, H = img.size
 
-    # Draw challenge, score, wallet, timestamp
+    # === 1. Symbol (centered horizontally) ===
     symbol = challenge["symbol"]
-    bbox = draw.textbbox((0,0), symbol, font=FONT_LG)
+    bbox = draw.textbbox((0, 0), symbol, font=FONT_LG)
     w_sym, h_sym = bbox[2] - bbox[0], bbox[3] - bbox[1]
     x_sym = (W - w_sym) / 2
-    y_sym = H * 0.35   # ~18% down from top; tweak as needed
+    y_sym = H * 0.35  # Carefully preserved position
     draw.text((x_sym, y_sym), symbol, font=FONT_XLG, fill="#00FFFF")
 
-    # 2) SCORE (just below the symbol, centered)
+    # === 2. Score (centered below symbol) ===
     score_txt = f"Score: {score}%"
-    bbox = draw.textbbox((0,0), score_txt, font=FONT_LG)
+    bbox = draw.textbbox((0, 0), score_txt, font=FONT_LG)
     w_sc, h_sc = bbox[2] - bbox[0], bbox[3] - bbox[1]
     x_sc = (W - w_sc) / 2
-    y_sc = y_sym + h_sym + 30   # 20px spacing below symbol
+    y_sc = y_sym + h_sym + 30
     draw.text((x_sc, y_sc), score_txt, font=FONT_LG, fill="#FF69B4")
 
-    # 3) WALLET (bottom-left, above the footer)
+    # === 3. Wallet (bottom-left aligned) ===
     wallet_txt = f"Wallet: {wallet[:4]} … {wallet[-4:]}"
-    bbox = draw.textbbox((0,0), wallet_txt, font=FONT_MD)
+    bbox = draw.textbbox((0, 0), wallet_txt, font=FONT_MD)
     h_wt = bbox[3] - bbox[1]
-    x_wt = W * 0.30             # 5% in from left
-    y_wt = H * 0.56             # ~75% down from top
+    x_wt = W * 0.30
+    y_wt = H * 0.56
     draw.text((x_wt, y_wt), wallet_txt, font=FONT_MD, fill="#C71585")
 
-    # 4) DATE & TIME (just below wallet line)
-    date_txt = "Date: " + timestamp.strftime("%Y-%m-%d %H:%M")
-    bbox = draw.textbbox((0,0), date_txt, font=FONT_MD)
-    y_dt = y_wt + h_wt + 10      # 8px spacing
+    # === 4. Date/Time (below wallet) ===
+    local_time = timestamp.astimezone(timezone("Asia/Kolkata"))
+    date_txt = "Date: " + local_time.strftime("%Y-%m-%d %H:%M")
+    y_dt = y_wt + h_wt + 10
     draw.text((x_wt, y_dt), date_txt, font=FONT_MD, fill="#66FCF1")
 
-    # Save image to buffer
+    # === Save & Upload ===
     buf = BytesIO()
     img.save(buf, format="PNG")
     buf.seek(0)
@@ -87,7 +89,7 @@ def generate_and_pin(challenge, score, wallet, timestamp):
         "attributes": [
             {"trait_type": "Score", "value": score},
             {"trait_type": "Wallet", "value": wallet[:4] + "..." + wallet[-4:]},
-            {"trait_type": "Timestamp", "value": timestamp.strftime("%Y-%m-%d %H:%M")}
+            {"trait_type": "Timestamp", "value": local_time.strftime("%Y-%m-%d %H:%M")}
         ]
     }
     metadata_url = pin_json(metadata)
