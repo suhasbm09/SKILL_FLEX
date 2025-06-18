@@ -151,10 +151,10 @@ Add to root `.gitignore`:
 
 ## ✉️ Contact
 **Suhas B M**  
-- GitHub: [suhasbm09](https://github.com/suhasbm09)
+- [GitHub](https://github.com/suhasbm09)
 - Email: suhaasbm2004@gmail.com
-- Portfolio: [suhas-bm](https://portfolio-suhasbm.vercel.app)
-- LinkedIn: [Suhas B M](https://www.linkedin.com/in/suhas-b-m-88a179244)
+- [Portfolio](https://portfolio-suhasbm.vercel.app)
+- [LinkedIn](https://www.linkedin.com/in/suhas-b-m-88a179244)
 
 ---
 
