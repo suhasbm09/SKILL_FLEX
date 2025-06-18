@@ -42,3 +42,56 @@ export const challengeDetails = {
     },
   };
   
+export const skills = [
+  { 
+    id: 1, 
+    title: 'Algorithmic Problem Solving in JavaScript',
+    icon: '<FaCode />',
+    difficulty: 'Intermediate',
+    duration: '30 min',
+    description: 'Master data structures and algorithms with JavaScript',
+    color: 'from-blue-500 to-cyan-500',
+    tags: ['JavaScript', 'Algorithms', 'Data Structures']
+  },
+  { 
+    id: 2, 
+    title: 'Query & Model Data with MongoDB',
+    icon: '<FaDatabase />',
+    difficulty: 'Advanced',
+    duration: '45 min',
+    description: 'Design efficient database schemas and queries',
+    color: 'from-green-500 to-emerald-500',
+    tags: ['MongoDB', 'Database Design', 'NoSQL']
+  },
+  { 
+    id: 3, 
+    title: 'Full-Stack App Deployment on AWS ECS',
+    icon: '<FaCloud />',
+    difficulty: 'Expert',
+    duration: '60 min',
+    description: 'Deploy scalable applications using container orchestration',
+    color: 'from-orange-500 to-red-500',
+    tags: ['AWS', 'ECS', 'Docker', 'DevOps']
+  },
+  { 
+    id: 4, 
+    title: 'Software Delivery with Docker',
+    icon: '<FaDocker />',
+    difficulty: 'Intermediate',
+    duration: '40 min',
+    description: 'Containerize applications for consistent deployment',
+    color: 'from-blue-500 to-indigo-500',
+    tags: ['Docker', 'Containers', 'CI/CD']
+  },
+  { 
+    id: 5, 
+    title: 'Smart Contract Dev on Solana',
+    icon: '<FaLink />',
+    difficulty: 'Expert',
+    duration: '90 min',
+    description: 'Build and deploy Solana programs with Anchor',
+    color: 'from-purple-500 to-pink-500',
+    tags: ['Solana', 'Anchor', 'Rust', 'Web3']
+  }
+];
+  

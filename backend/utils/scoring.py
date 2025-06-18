@@ -1,8 +1,15 @@
 import requests
 import re
+import os
 from .challenge_task import challenge_details
+from dotenv import load_dotenv
 
-OPENROUTER_API_KEY = "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"
+load_dotenv()
+
+# Load API key from environment variable for security
+OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY")
+if not OPENROUTER_API_KEY:
+    raise RuntimeError("OPENROUTER_API_KEY environment variable not set. Please add it to your .env file.")
 OPENROUTER_ENDPOINT = "https://openrouter.ai/api/v1/chat/completions"
 
 SYSTEM_PROMPT = """
