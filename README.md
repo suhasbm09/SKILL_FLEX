@@ -11,7 +11,7 @@
   
   <h2><strong>Decentralized, AI-powered credentialing. <br/>Prove your skills. Mint your proof. Own your future.</strong></h2>
   <p>Modern glassmorphic UI · Monaco code editor · Soulbound NFTs · Instant AI scoring</p>
-  
+  <br>
   <img src="/frontend/client_vite/public/images/hero.png" alt="SkillFlex Hero Screenshot" width="900" style="margin-top:2em; border-radius: 24px; box-shadow: 0 8px 32px rgba(80,0,120,0.15);" />
 </div>
 
@@ -153,7 +153,7 @@ Add to root `.gitignore`:
 **Suhas B M**  
 - GitHub: [suhasbm09](https://github.com/suhasbm09)
 - Email: suhaasbm2004@gmail.com
-- Portfolio: [portfolio-suhasbm.vercel.app](https://portfolio-suhasbm.vercel.app)
+- Portfolio: [suhas-bm](https://portfolio-suhasbm.vercel.app)
 - LinkedIn: [Suhas B M](https://www.linkedin.com/in/suhas-b-m-88a179244)
 
 ---
